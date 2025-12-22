@@ -86,6 +86,33 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_verses: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          verse_reference: string
+          verse_text: string
+          wisdom_message: string | null
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          verse_reference: string
+          verse_text: string
+          wisdom_message?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          verse_reference?: string
+          verse_text?: string
+          wisdom_message?: string | null
+        }
+        Relationships: []
+      }
       notes: {
         Row: {
           book_id: string
@@ -146,6 +173,68 @@ export type Database = {
           id?: string
           role?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      reading_plan_days: {
+        Row: {
+          created_at: string
+          day_number: number
+          id: string
+          plan_id: string
+          readings: string[]
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          day_number: number
+          id?: string
+          plan_id: string
+          readings: string[]
+          title: string
+        }
+        Update: {
+          created_at?: string
+          day_number?: number
+          id?: string
+          plan_id?: string
+          readings?: string[]
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reading_plan_days_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "reading_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reading_plans: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration_days: number
+          id: string
+          is_active: boolean
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration_days: number
+          id?: string
+          is_active?: boolean
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration_days?: number
+          id?: string
+          is_active?: boolean
+          name?: string
         }
         Relationships: []
       }
@@ -219,6 +308,47 @@ export type Database = {
             columns: ["story_id"]
             isOneToOne: false
             referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_reading_progress: {
+        Row: {
+          completed_days: number[]
+          current_day: number
+          id: string
+          is_completed: boolean
+          last_read_at: string | null
+          plan_id: string
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_days?: number[]
+          current_day?: number
+          id?: string
+          is_completed?: boolean
+          last_read_at?: string | null
+          plan_id: string
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_days?: number[]
+          current_day?: number
+          id?: string
+          is_completed?: boolean
+          last_read_at?: string | null
+          plan_id?: string
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_reading_progress_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "reading_plans"
             referencedColumns: ["id"]
           },
         ]

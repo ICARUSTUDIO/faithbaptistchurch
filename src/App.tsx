@@ -11,8 +11,13 @@ import AIPage from "./pages/AIPage";
 import BookmarksPage from "./pages/BookmarksPage";
 import SettingsPage from "./pages/SettingsPage";
 import AuthPage from "./pages/AuthPage";
+import PastorLoginPage from "./pages/PastorLoginPage";
+import PastorDashboard from "./pages/PastorDashboard";
 import PastorUploadPage from "./pages/PastorUploadPage";
 import DailyMannaUploadPage from "./pages/DailyMannaUploadPage";
+import PastorDailyVersePage from "./pages/PastorDailyVersePage";
+import PastorReadingPlansPage from "./pages/PastorReadingPlansPage";
+import ReadingPlansPage from "./pages/ReadingPlansPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,8 +37,13 @@ const App = () => (
               <Route path="/bookmarks" element={<BookmarksPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/auth" element={<AuthPage />} />
+              <Route path="/reading-plans" element={<ReadingPlansPage />} />
+              <Route path="/pastor/login" element={<PastorLoginPage />} />
+              <Route path="/pastor/dashboard" element={<PastorDashboard />} />
               <Route path="/pastor/upload" element={<PastorUploadPage />} />
               <Route path="/pastor/daily-manna" element={<DailyMannaUploadPage />} />
+              <Route path="/pastor/daily-verse" element={<PastorDailyVersePage />} />
+              <Route path="/pastor/reading-plans" element={<PastorReadingPlansPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
