@@ -28,21 +28,17 @@ export const BibleSearch = ({ onSelectVerse }: BibleSearchProps) => {
     const results: SearchResult[] = [];
     const searchLower = query.toLowerCase();
 
+    // Search through book names first
     for (const book of bibleBooks) {
-      for (const chapter of book.chapters) {
-        for (const verse of chapter.verses) {
-          if (verse.text.toLowerCase().includes(searchLower)) {
-            results.push({
-              bookId: book.id,
-              bookName: book.name,
-              chapter: chapter.number,
-              verse: verse.number,
-              text: verse.text,
-            });
-          }
-        }
+      if (book.name.toLowerCase().includes(searchLower)) {
+        results.push({
+          bookId: book.id,
+          bookName: book.name,
+          chapter: 1,
+          verse: 1,
+          text: `${book.name} - ${book.chapters} chapters`,
+        });
       }
-      // Limit results to prevent performance issues
       if (results.length >= 50) break;
     }
 

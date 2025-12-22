@@ -1,11 +1,22 @@
-import { Moon, Sun, Type, Info } from 'lucide-react';
+import { Moon, Sun, Type, Info, User, LogOut, LogIn, Shield } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { useApp } from '@/contexts/AppContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Switch } from '@/components/ui/switch';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 const SettingsPage = () => {
   const { isDarkMode, toggleDarkMode, fontSize, setFontSize } = useApp();
+  const { user, profile, signOut, isPastor } = useAuth();
+  const navigate = useNavigate();
+  
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
   
   return (
     <AppLayout>
@@ -14,6 +25,45 @@ const SettingsPage = () => {
       </header>
       
       <div className="p-4 space-y-6">
+        {/* Account Section */}
+        <section className="bg-card border border-border rounded-xl p-4 space-y-4">
+          <h2 className="font-semibold flex items-center gap-2">
+            <User className="w-5 h-5" />
+            Account
+          </h2>
+          
+          {user ? (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium">{profile?.full_name || 'User'}</p>
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
+                </div>
+                {isPastor && (
+                  <Badge variant="secondary" className="flex items-center gap-1">
+                    <Shield className="w-3 h-3" />
+                    {profile?.role === 'admin' ? 'Admin' : 'Pastor'}
+                  </Badge>
+                )}
+              </div>
+              <Button variant="outline" className="w-full" onClick={handleSignOut}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                Sign in to save your bookmarks and notes across devices.
+              </p>
+              <Button className="w-full" onClick={() => navigate('/auth')}>
+                <LogIn className="w-4 h-4 mr-2" />
+                Sign In
+              </Button>
+            </div>
+          )}
+        </section>
+        
         {/* Appearance */}
         <section className="bg-card border border-border rounded-xl p-4 space-y-4">
           <h2 className="font-semibold flex items-center gap-2">
@@ -57,6 +107,9 @@ const SettingsPage = () => {
             About
           </h2>
           <p className="text-sm text-muted-foreground">Church Bible App v1.0.0</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Your daily companion for scripture and spiritual growth.
+          </p>
         </section>
       </div>
     </AppLayout>
