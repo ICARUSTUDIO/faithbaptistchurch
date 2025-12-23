@@ -134,6 +134,7 @@ const AuthPage = () => {
                         <FormLabel>Full Name</FormLabel>
                         <FormControl>
                           <Input 
+                            type="text"
                             placeholder="John Doe" 
                             autoComplete="name"
                             {...field} 
