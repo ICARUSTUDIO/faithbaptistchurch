@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Sunrise, RefreshCw } from 'lucide-react';
+import { Plus, Sunrise, RefreshCw, Bell, Calendar, ChevronRight, Megaphone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { StoryCard } from '@/components/stories/StoryCard';
@@ -8,6 +8,8 @@ import { sampleStories, getTodaysManna } from '@/lib/storiesData';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -34,11 +36,22 @@ interface DailyManna {
   prayer: string | null;
 }
 
+interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  announcement_type: string;
+  event_date: string | null;
+  is_pinned: boolean;
+  created_at: string;
+}
+
 const DiscoverPage = () => {
   const { isPastor } = useAuth();
   const navigate = useNavigate();
   const [stories, setStories] = useState<Story[]>([]);
   const [manna, setManna] = useState<DailyManna | null>(null);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   const fetchContent = async () => {
@@ -67,6 +80,19 @@ const DiscoverPage = () => {
       
       if (storiesData) {
         setStories(storiesData as Story[]);
+      }
+
+      // Fetch active announcements
+      const { data: announcementsData } = await supabase
+        .from('church_announcements')
+        .select('*')
+        .eq('is_active', true)
+        .order('is_pinned', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (announcementsData) {
+        setAnnouncements(announcementsData as Announcement[]);
       }
     } catch (error) {
       console.error('Error fetching content:', error);
@@ -105,23 +131,32 @@ const DiscoverPage = () => {
         likes: s.likes_count,
       }))
     : sampleStories;
+
+  const getAnnouncementBadge = (type: string) => {
+    switch (type) {
+      case 'urgent': return <Badge variant="destructive">Urgent</Badge>;
+      case 'event': return <Badge variant="secondary">Event</Badge>;
+      case 'prayer': return <Badge className="bg-purple-500/10 text-purple-600">Prayer</Badge>;
+      default: return null;
+    }
+  };
   
   return (
     <AppLayout>
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border p-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Discover</h1>
-            <p className="text-sm text-muted-foreground">Daily inspiration & church stories</p>
+            <h1 className="text-2xl font-bold">Faith Baptist Church</h1>
+            <p className="text-sm text-muted-foreground">Daily inspiration & church updates</p>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" onClick={fetchContent}>
               <RefreshCw className="w-5 h-5" />
             </Button>
             {isPastor && (
-              <Button size="sm" onClick={() => navigate('/pastor/upload')}>
+              <Button size="sm" onClick={() => navigate('/pastor/dashboard')}>
                 <Plus className="w-4 h-4 mr-1" />
-                Create
+                Manage
               </Button>
             )}
           </div>
@@ -132,22 +167,30 @@ const DiscoverPage = () => {
         <div className="p-4 space-y-6">
           {/* Pastor Quick Actions */}
           {isPastor && (
-            <div className="flex gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <Button 
                 variant="outline" 
-                className="flex-1"
+                className="flex-col h-auto py-3"
                 onClick={() => navigate('/pastor/upload')}
               >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Story
+                <Plus className="w-4 h-4 mb-1" />
+                <span className="text-xs">Story</span>
               </Button>
               <Button 
                 variant="outline" 
-                className="flex-1"
+                className="flex-col h-auto py-3"
                 onClick={() => navigate('/pastor/daily-manna')}
               >
-                <Sunrise className="w-4 h-4 mr-2" />
-                Daily Manna
+                <Sunrise className="w-4 h-4 mb-1" />
+                <span className="text-xs">Manna</span>
+              </Button>
+              <Button 
+                variant="outline" 
+                className="flex-col h-auto py-3"
+                onClick={() => navigate('/pastor/announcements')}
+              >
+                <Megaphone className="w-4 h-4 mb-1" />
+                <span className="text-xs">Announce</span>
               </Button>
             </div>
           )}
@@ -160,8 +203,42 @@ const DiscoverPage = () => {
             </div>
           ) : (
             <>
+              {/* Church Announcements */}
+              {announcements.length > 0 && (
+                <div>
+                  <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                    <Megaphone className="w-5 h-5 text-primary" />
+                    Church Announcements
+                  </h2>
+                  <div className="space-y-3">
+                    {announcements.map(announcement => (
+                      <Card key={announcement.id} className={announcement.is_pinned ? 'border-primary/50 bg-primary/5' : ''}>
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              {announcement.is_pinned && <Bell className="w-4 h-4 text-primary" />}
+                              <h3 className="font-semibold">{announcement.title}</h3>
+                            </div>
+                            {getAnnouncementBadge(announcement.announcement_type)}
+                          </div>
+                          <p className="text-sm text-muted-foreground line-clamp-2">{announcement.content}</p>
+                          {announcement.event_date && (
+                            <div className="flex items-center gap-1 mt-2 text-xs text-primary">
+                              <Calendar className="w-3 h-3" />
+                              {format(new Date(announcement.event_date), 'MMMM d, yyyy')}
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Daily Manna */}
               <DailyMannaCard manna={displayManna} />
               
+              {/* Church Stories */}
               <div>
                 <h2 className="text-lg font-semibold mb-3">Church Stories</h2>
                 {displayStories.length === 0 ? (

@@ -17,6 +17,7 @@ import PastorUploadPage from "./pages/PastorUploadPage";
 import DailyMannaUploadPage from "./pages/DailyMannaUploadPage";
 import PastorDailyVersePage from "./pages/PastorDailyVersePage";
 import PastorReadingPlansPage from "./pages/PastorReadingPlansPage";
+import PastorAnnouncementsPage from "./pages/PastorAnnouncementsPage";
 import ReadingPlansPage from "./pages/ReadingPlansPage";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/pastor/daily-manna" element={<DailyMannaUploadPage />} />
               <Route path="/pastor/daily-verse" element={<PastorDailyVersePage />} />
               <Route path="/pastor/reading-plans" element={<PastorReadingPlansPage />} />
+              <Route path="/pastor/announcements" element={<PastorAnnouncementsPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

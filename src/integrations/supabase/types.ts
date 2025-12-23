@@ -50,6 +50,45 @@ export type Database = {
         }
         Relationships: []
       }
+      church_announcements: {
+        Row: {
+          announcement_type: string
+          author_id: string
+          content: string
+          created_at: string
+          event_date: string | null
+          id: string
+          is_active: boolean
+          is_pinned: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          announcement_type?: string
+          author_id: string
+          content: string
+          created_at?: string
+          event_date?: string | null
+          id?: string
+          is_active?: boolean
+          is_pinned?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          announcement_type?: string
+          author_id?: string
+          content?: string
+          created_at?: string
+          event_date?: string | null
+          id?: string
+          is_active?: boolean
+          is_pinned?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       daily_manna: {
         Row: {
           author_id: string
@@ -311,6 +350,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_reading_activity: {
+        Row: {
+          activity_type: string
+          book_id: string
+          chapter: number
+          created_at: string
+          duration_seconds: number | null
+          id: string
+          user_id: string
+          verse: number | null
+        }
+        Insert: {
+          activity_type?: string
+          book_id: string
+          chapter: number
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          user_id: string
+          verse?: number | null
+        }
+        Update: {
+          activity_type?: string
+          book_id?: string
+          chapter?: number
+          created_at?: string
+          duration_seconds?: number | null
+          id?: string
+          user_id?: string
+          verse?: number | null
+        }
+        Relationships: []
       }
       user_reading_progress: {
         Row: {

@@ -4,7 +4,7 @@ import {
   BookOpen, Upload, Calendar, Bell, Users, 
   FileText, Heart, Video, Quote, Image, 
   ArrowRight, Plus, BarChart3, LogOut,
-  Sparkles, ChevronRight
+  Sparkles, ChevronRight, Megaphone
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -103,6 +103,7 @@ const PastorDashboard = () => {
   const quickActions = [
     { icon: Upload, label: 'New Story', path: '/pastor/upload', color: 'bg-blue-500/10 text-blue-500' },
     { icon: Calendar, label: 'Daily Manna', path: '/pastor/daily-manna', color: 'bg-amber-500/10 text-amber-500' },
+    { icon: Megaphone, label: 'Announcement', path: '/pastor/announcements', color: 'bg-rose-500/10 text-rose-500' },
     { icon: BookOpen, label: 'Reading Plan', path: '/pastor/reading-plans', color: 'bg-green-500/10 text-green-500' },
     { icon: Sparkles, label: 'Daily Verse', path: '/pastor/daily-verse', color: 'bg-purple-500/10 text-purple-500' },
   ];

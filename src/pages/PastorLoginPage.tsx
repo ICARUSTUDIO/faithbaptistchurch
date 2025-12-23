@@ -99,12 +99,14 @@ const PastorLoginPage = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Email</FormLabel>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input type="email" placeholder="pastor@faithbaptist.org" className="pl-10" {...field} />
-                        </FormControl>
-                      </div>
+                      <FormControl>
+                        <Input 
+                          type="email" 
+                          placeholder="pastor@faithbaptist.org" 
+                          autoComplete="email"
+                          {...field} 
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -115,12 +117,14 @@ const PastorLoginPage = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Password</FormLabel>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                        <FormControl>
-                          <Input type="password" placeholder="••••••••" className="pl-10" {...field} />
-                        </FormControl>
-                      </div>
+                      <FormControl>
+                        <Input 
+                          type="password" 
+                          placeholder="••••••••" 
+                          autoComplete="current-password"
+                          {...field} 
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}

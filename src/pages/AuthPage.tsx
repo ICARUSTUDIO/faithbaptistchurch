@@ -109,7 +109,7 @@ const AuthPage = () => {
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <BookOpen className="w-8 h-8 text-primary" />
           </div>
-          <h1 className="text-2xl font-serif font-bold text-foreground">Bible App</h1>
+          <h1 className="text-2xl font-serif font-bold text-foreground">Faith Baptist Church</h1>
           <p className="text-muted-foreground mt-2">Your daily companion for scripture</p>
         </div>
 
@@ -132,12 +132,13 @@ const AuthPage = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Full Name</FormLabel>
-                        <div className="relative">
-                          <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                          <FormControl>
-                            <Input placeholder="John Doe" className="pl-10" {...field} />
-                          </FormControl>
-                        </div>
+                        <FormControl>
+                          <Input 
+                            placeholder="John Doe" 
+                            autoComplete="name"
+                            {...field} 
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -148,12 +149,14 @@ const AuthPage = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <div className="relative">
-                          <Mail className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                          <FormControl>
-                            <Input type="email" placeholder="you@example.com" className="pl-10" {...field} />
-                          </FormControl>
-                        </div>
+                        <FormControl>
+                          <Input 
+                            type="email" 
+                            placeholder="you@example.com" 
+                            autoComplete="email"
+                            {...field} 
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -164,12 +167,14 @@ const AuthPage = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Password</FormLabel>
-                        <div className="relative">
-                          <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                          <FormControl>
-                            <Input type="password" placeholder="••••••••" className="pl-10" {...field} />
-                          </FormControl>
-                        </div>
+                        <FormControl>
+                          <Input 
+                            type="password" 
+                            placeholder="••••••••" 
+                            autoComplete="new-password"
+                            {...field} 
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -180,12 +185,14 @@ const AuthPage = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Confirm Password</FormLabel>
-                        <div className="relative">
-                          <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                          <FormControl>
-                            <Input type="password" placeholder="••••••••" className="pl-10" {...field} />
-                          </FormControl>
-                        </div>
+                        <FormControl>
+                          <Input 
+                            type="password" 
+                            placeholder="••••••••" 
+                            autoComplete="new-password"
+                            {...field} 
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -205,12 +212,14 @@ const AuthPage = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
-                        <div className="relative">
-                          <Mail className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                          <FormControl>
-                            <Input type="email" placeholder="you@example.com" className="pl-10" {...field} />
-                          </FormControl>
-                        </div>
+                        <FormControl>
+                          <Input 
+                            type="email" 
+                            placeholder="you@example.com" 
+                            autoComplete="email"
+                            {...field} 
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -221,12 +230,14 @@ const AuthPage = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Password</FormLabel>
-                        <div className="relative">
-                          <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
-                          <FormControl>
-                            <Input type="password" placeholder="••••••••" className="pl-10" {...field} />
-                          </FormControl>
-                        </div>
+                        <FormControl>
+                          <Input 
+                            type="password" 
+                            placeholder="••••••••" 
+                            autoComplete="current-password"
+                            {...field} 
+                          />
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}

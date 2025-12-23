@@ -1,1 +1,7 @@
 project_id = "gfwjynhbmpdgvacutyab"
+
+[functions.bible-chat]
+verify_jwt = false
+
+[functions.personalized-verses]
+verify_jwt = false
